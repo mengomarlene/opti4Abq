@@ -39,20 +39,18 @@ def runModel(p,modelScript,modelsDir):
     if verbose: print 'cmd= ',cmd
     pCall1 = subprocess.call(cmd, shell=True)
     os.chdir(baseName)
-    # run abaqus postPro -- this is the part where I did not find a way to work on a different workspace for each abaqus run
-    # cmd = 'abaqus python runAbaqus.py postPro %s'%(filePath)
-    # pCall2 = subprocess.call(cmd, shell=True)
+    # run abaqus postPro -- needs to be called with abaqus python as abaqus-specific modules are needed.
     if os.path.isfile(filePath):
-        toolbox.runPostPro(filePath,workspace)
-    # if pCall2:#the post pro function has not run properly
-        # writeErrorFile(workspace,modelScript,p,pCall1,pCall2)
-        # raise Exception("!! something has gone wrong, check notRun.txt")
-        # return 0
-    # else:
-        feOutputFile = os.path.join(workspace,'output.ascii')
-        with open(feOutputFile, 'r') as file:   
-            output = zip(*(map(float,line.split()) for line in file))
-        return output
+        cmd = 'abaqus python runPostPro.py %s %s'%(filePath,workspace)
+        pCall2 = subprocess.call(cmd, shell=True)
+        if pCall2:#the post pro function has not run properly
+            writeErrorFile(workspace,modelScript,p,pCall1,pCall2)
+            raise Exception("!! something has gone wrong, check notRun.txt")
+        else:
+            feOutputFile = os.path.join(workspace,'output.ascii')
+            with open(feOutputFile, 'r') as file:   
+                output = zip(*(map(float,line.split()) for line in file))
+            return output
 
 def writeErrorFile(workspace,modelScript,p,pCall1,pCall2='not run yet'):
     feErrorFile = os.path.join(workspace,'notRun.txt')
