@@ -3,7 +3,11 @@ To reference opti4Abq in publications, please cite both of the following:
 Mengoni M., Luxmoore B.J., Jones A.C., Wijayathunga V.N., Broom N.D. & Wilcox R.K. (accepted 2015)
 "Derivation of inter-lamellar behaviour of the intervertebral disc annulus." Journal of the Mechanical Behavior of Biomedical Materials
 
-Mengoni M.: "opti4Abq, a generic python code to run Abaqus in an optimisation loop". doi
+Mengoni M.: "opti4Abq, a generic python code to run Abaqus in an optimisation loop". 
+
+[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.16318.svg)](http://dx.doi.org/10.5281/zenodo.16318)
+
+
 
 ```
 @article{Mengoni_2015_JMBBM,
@@ -14,10 +18,11 @@ Mengoni M.: "opti4Abq, a generic python code to run Abaqus in an optimisation lo
     year =    {2015}
 }
 
-@Misc{opti4Abq_github,
+@online{opti4Abq_github,
   Title  = {opti4Abq, a generic python code to run Abaqus in an optimisation loop},
   Author = {Mengoni, M.},
   Date = {2015-03-25},
-  Doi = {},
+  Doi = {http://dx.doi.org/10.5281/zenodo.16318},
+  Version = {0.1}
 }
 ```
