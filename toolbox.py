@@ -1,5 +1,5 @@
 """
-generic python tools
+generic python tools - part of the opti4Abq project
 """
 import os,sys
 #-----------------------------------------------------
