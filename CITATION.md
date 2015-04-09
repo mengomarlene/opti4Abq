@@ -5,7 +5,7 @@ Mengoni M., Luxmoore B.J., Jones A.C., Wijayathunga V.N., Broom N.D. & Wilcox R.
 
 Mengoni M.: "opti4Abq, a generic python code to run Abaqus in an optimisation loop". 
 
-[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.16318.svg)](http://dx.doi.org/10.5281/zenodo.16318)
+[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.16659.svg)](http://dx.doi.org/10.5281/zenodo.16659)
 
 
 
@@ -21,8 +21,8 @@ Mengoni M.: "opti4Abq, a generic python code to run Abaqus in an optimisation lo
 @online{opti4Abq_github,
   Title  = {opti4Abq, a generic python code to run Abaqus in an optimisation loop},
   Author = {Mengoni, M.},
-  Date = {2015-03-25},
-  Doi = {http://dx.doi.org/10.5281/zenodo.16318},
-  Version = {0.1}
+  Date = {2015-04-07},
+  Doi = {http://dx.doi.org/10.5281/zenodo.16659},
+  Version = {0.2}
 }
 ```
