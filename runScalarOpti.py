@@ -1,8 +1,11 @@
+# scalar example for the opti4Abq project
+# run as "python runScalarOpti"
+
 import opti4AbqScalar
 import os
 
-feModelDir = os.path.join(r"d:\myWork\FEModels\ovineTetsGSFactor\ovineValidation")
-expDir = os.path.join(r"d:\myWork\FEModels\ovineTetsGSFactor\ovineValidation")
+feModelDir = os.path.join(r"d:\myWork\FEModels\ovineTetsGSFactor\ovineCalibration")
+expDir = os.path.join(r"d:\myWork\FEModels\ovineTetsGSFactor\ovineCalibration")
 
 optiParam = {}
 optiParam['maxEval'] = 40 # max number of function evaluation in the optimisation process !!there is more than one evalutation per iteration as the jacobian as to be computed!!
@@ -12,4 +15,4 @@ optiParam['ftol'] = 1e-6 # tolerance on the function value
 bounds = (1e-4,0.1)
 
 #perform optimisation
-p,fVal,nFun,mes = opti4AbqScalar.main(feModelDir, expDir, pBounds=bounds, options=optiParam)
+p,fVal,info = opti4AbqScalar.main(feModelDir, expDir, pBounds=bounds, options=optiParam)
