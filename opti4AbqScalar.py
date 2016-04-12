@@ -7,14 +7,12 @@ verbose = False
 saveIntermediateValues = True
 NIter = 0
 
-
-
 def residuals(p, modelsDir, expDir):
     ''' residuals(p, modelsDir, expDir) computes the diff (in a least square sense) between experimental data and FE data (function of p)
         p: parameter to optimize
         modelsDir: directory with the computational models, contains python scripts defining and running the FE model. Each script must also contain a function called postPro
         expDir: directory with experimental data to fit, should contains ascii files whose names are the same as the FE model names
-    each ascii file is contains one value (the experimental equivalent of the FE output value)
+    each ascii file contains one value (the experimental equivalent of the FE output value)
     '''
     feData,modelNames = computeFEData(p,modelsDir)
     #
