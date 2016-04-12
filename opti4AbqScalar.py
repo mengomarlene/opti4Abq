@@ -59,7 +59,7 @@ def runModel(p,modelScript,modelsDir):
         writeErrorFile(workspace,modelScript,p,pCall1,pCall2)
         raise Exception("!! something has gone wrong, check notRun.txt")
     else:# reads the written output of the post-processing function as a float
-        feOutputFile = os.path.join(workspace,'output.ascii')#could be generalised to allow the user to input a fileName!
+        feOutputFile = os.path.join(workspace,'output.dat')#could be generalised to allow the user to input a fileName!
         with open(feOutputFile, 'r') as file:   
             output = zip(*(map(float,line.split()) for line in file))
         return output
@@ -90,7 +90,7 @@ def plotValues(fittedValues, modelScript, expData):
 
 def saveValues(p, feData, names, value, no='final'):
     baseName = os.path.dirname(os.path.abspath(__file__))
-    feDataFile = os.path.join(baseName,'verboseValues_%i.ascii'%no)
+    feDataFile = os.path.join(baseName,'verboseValues_%i.dat'%no)
     with open(feDataFile, 'w') as file:
         file.write('run number: %s\n'%(no))
         file.write('parameter inputs: %s\n'%(p))
@@ -102,7 +102,7 @@ def residuals(p, modelsDir, expDir):
         p: parameter to optimize
         modelsDir: directory with the computational models, contains python scripts defining and running the FE model. Each script must also contain a function called postPro
         expDir: directory with experimental data to fit, should contains ascii files whose names are the same as the FE model names
-    each ascii file is contains one value (the experimental equivalent of the FE output value)
+    each ascii file contains one value (the experimental equivalent of the FE output value)
     '''
     feData,modelNames = computeFEData(p,modelsDir)
     #
