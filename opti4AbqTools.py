@@ -4,6 +4,8 @@ import subprocess
 
 verbose = False
 NIter = 0
+saveIntermediateValues = True
+
 def computeFEData(p,modelsDir):
     files = os.listdir(modelsDir)
     files.sort()
@@ -43,7 +45,10 @@ def runModel(p,modelScript,modelsDir):
     #2/ runs abaqus cae
     if verbose: print "running abaqus cae on %s"%(toolbox.getFileName(filePath))
     cmd = 'abaqus cae noGUI=%s'%(filePath)
-    paramString = str(p)
+    try:#multiparam opti
+        paramString = ' '.join(map(str,p))
+    except(TypeError):#scalar opti
+        paramString = str(p)
     cmd += ' -- %s > %s 2>&1'%(paramString,'exeCalls.txt')
     if verbose: print 'cmd= ',cmd
     pCall1 = subprocess.call(cmd, shell=True)
@@ -86,11 +91,46 @@ def plotValues(fittedValues, modelScript, expData):
     if not verbose:plt.show()
     return fittedValues
 
+def plotIntermediateValues(feData, expData, no='final'):
+    import matplotlib.pyplot as plt
+    plt.figure()
+    plt.plot(expData[0],expData[1],'o',feData[0],feData[1],'x')
+    plt.legend(['Data', 'Fit'])
+    plt.title('Least-squares fit to data - function evaluation nb %i'%no)
+    plt.savefig('fit_%i.png'%no, bbox_inches='tight')
+    plt.savefig('fit_%i.pdf'%no, bbox_inches='tight')
+
 def saveValues(p, feData, names, value, no='final'):
     baseName = os.path.dirname(os.path.abspath(__file__))
-    feDataFile = os.path.join(baseName,'verboseValues_%i.dat'%no)
+    feDataFile = os.path.join(baseName,'intermediateValues_%i.dat'%no)
     with open(feDataFile, 'w') as file:
         file.write('run number: %s\n'%(no))
         file.write('parameter inputs: %s\n'%(p))
         file.write('least square error %s\n'%value)
         file.write('\n'.join('%s: %f ' %(name,data[0]) for data,name in zip(feData,names)))
+        
+def residualsScalar(p, modelsDir, expDir):
+    ''' residuals(p, modelsDir, expDir) computes the diff (in a least square sense) between experimental data and FE data (function of p)
+        p: parameter to optimize
+        modelsDir: directory with the computational models, contains python scripts defining and running the FE model. Each script must also contain a function called postPro
+        expDir: directory with experimental data to fit, should contains ascii files whose names are the same as the FE model names
+    each ascii file contains one value (the experimental equivalent of the FE output value)
+    '''
+    feData,modelNames = computeFEData(p,modelsDir)
+    #
+    import numpy as np
+    diff = list()
+    for data,name in zip(feData,modelNames):
+        #read data file
+        dataFile = os.path.join(expDir,name.split('.')[0]+'.ascii')
+        with open(dataFile, 'r') as file: expData =  float(file.readline().split()[0])
+        # add difference in list
+        if data[0]: diff.append((expData - data[0])/expData)
+    lstSq = 0
+    for value in diff: lstSq+= value**2
+    lstSq /= len(diff)
+    lstSq = lstSq**0.5
+    global NIter
+    NIter += 1
+    if saveIntermediateValues: saveValues(p, feData, modelNames, lstSq, NIter)
+    return lstSq

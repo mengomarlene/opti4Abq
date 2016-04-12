@@ -1,7 +1,7 @@
 # scalar example for the opti4Abq project
 # run as "python runScalarOpti"
 
-import opti4AbqScalar
+import opti4Abq1Variable
 import os
 
 feModelDir = r"D:\myWork\FEModels\Sami\calibrationFilesOvine"
@@ -15,4 +15,4 @@ optiParam['ftol'] = 1e-6 # tolerance on the function value
 bounds = (1e-4,0.1)
 
 #perform optimisation
-p,fVal,info = opti4AbqScalar.main(feModelDir, expDir, pBounds=bounds, options=optiParam)
+p,fVal,info = opti4Abq1Variable.main(feModelDir, expDir, pBounds=bounds, options=optiParam)

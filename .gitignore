@@ -3,5 +3,5 @@ workspace/
 *.wmv
 *.py.bak
 *.ascii
-iterate.dat
+*.dat
 */*
