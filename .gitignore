@@ -4,3 +4,4 @@ workspace/
 *.py.bak
 *.ascii
 iterate.dat
+*/*
