@@ -49,7 +49,7 @@ def getOptiParam(modelsDir, expDir, optiParam, pBounds=None):
     if verbose: print res.message
     return res.x,res.fun,d
 
-def main(expDir, modelsDir, options={}, pBounds=None):
+def main(modelsDir, expDir, options={}, pBounds=None):
     optiParam = {}
     optiParam['maxEval']=10
     optiParam['ftol']=1e-8
