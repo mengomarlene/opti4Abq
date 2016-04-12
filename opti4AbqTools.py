@@ -102,7 +102,9 @@ def plotIntermediateValues(feData, expData, no='final'):
 
 def saveValues(p, feData, names, value, no='final'):
     baseName = os.path.dirname(os.path.abspath(__file__))
-    feDataFile = os.path.join(baseName,'intermediateValues_%i.dat'%no)
+    resultFolder = os.path.join(baseName,'results')
+    if not os.path.exists(resultFolder): os.makedirs(resultFolder)
+    feDataFile = os.path.join(resultFolder,'intermediateValues_%i.dat'%no)
     with open(feDataFile, 'w') as file:
         file.write('run number: %s\n'%(no))
         file.write('parameter inputs: %s\n'%(p))
@@ -134,3 +136,14 @@ def residualsScalar(p, modelsDir, expDir):
     NIter += 1
     if saveIntermediateValues: saveValues(p, feData, modelNames, lstSq, NIter)
     return lstSq
+    
+def callbackF(p):
+    global NIter
+    if verbose: print 'Nb Function Evaluation: %i, parameter inputs: %s\n'%(NIter,p)
+    baseName = os.path.dirname(os.path.abspath(__file__))
+    resultFolder = os.path.join(baseName,'results')
+    if not os.path.exists(resultFolder): os.makedirs(resultFolder)
+    callbackFile = os.path.join(resultFolder,'callbackValues_%i.dat'%NIter)
+    with open(callbackFile, 'w') as file:
+        file.write('Nb Function Evaluation: %i\n'%(NIter))
+        file.write('Parameters Input: %s\n'%(p))
