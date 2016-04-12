@@ -11,7 +11,7 @@
  author: MENMMEN, 04/03/2015
  ----------------------------------------------------------------
  INSTRUCTION
- run from command line as: "abaqus python runPotPro fileName workspace"
+ run from command line as: "abaqus python runPostPro fileName workspace"
  fileName is the full path of the python file where the postPro function is defined
  workspace is the full path of the directory where the odb file is
  ----------------------------------------------------------------

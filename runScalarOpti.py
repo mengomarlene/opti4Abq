@@ -4,8 +4,8 @@
 import opti4AbqScalar
 import os
 
-feModelDir = os.path.join(r"d:\myWork\FEModels\ovineTetsGSFactor\ovineCalibration")
-expDir = os.path.join(r"d:\myWork\FEModels\ovineTetsGSFactor\ovineCalibration")
+feModelDir = r"D:\myWork\FEModels\Sami\calibrationFilesOvine"
+expDir = r"C:\Users\menmmen\Documents\othersWork\Sami_GSFactor_ovine\stiffnessData"
 
 optiParam = {}
 optiParam['maxEval'] = 40 # max number of function evaluation in the optimisation process !!there is more than one evalutation per iteration as the jacobian as to be computed!!
