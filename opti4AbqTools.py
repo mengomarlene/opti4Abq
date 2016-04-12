@@ -111,31 +111,7 @@ def saveValues(p, feData, names, value, no='final'):
         file.write('least square error %s\n'%value)
         file.write('\n'.join('%s: %f ' %(name,data[0]) for data,name in zip(feData,names)))
         
-def residualsScalar(p, modelsDir, expDir):
-    ''' residuals(p, modelsDir, expDir) computes the diff (in a least square sense) between experimental data and FE data (function of p)
-        p: parameter to optimize
-        modelsDir: directory with the computational models, contains python scripts defining and running the FE model. Each script must also contain a function called postPro
-        expDir: directory with experimental data to fit, should contains ascii files whose names are the same as the FE model names
-    each ascii file contains one value (the experimental equivalent of the FE output value)
-    '''
-    feData,modelNames = computeFEData(p,modelsDir)
-    #
-    import numpy as np
-    diff = list()
-    for data,name in zip(feData,modelNames):
-        #read data file
-        dataFile = os.path.join(expDir,name.split('.')[0]+'.ascii')
-        with open(dataFile, 'r') as file: expData =  float(file.readline().split()[0])
-        # add difference in list
-        if data[0]: diff.append((expData - data[0])/expData)
-    lstSq = 0
-    for value in diff: lstSq+= value**2
-    lstSq /= len(diff)
-    lstSq = lstSq**0.5
-    global NIter
-    NIter += 1
-    if saveIntermediateValues: saveValues(p, feData, modelNames, lstSq, NIter)
-    return lstSq
+
     
 def callbackF(p):
     global NIter

@@ -9,7 +9,7 @@ expDir = r"C:\Users\menmmen\Documents\othersWork\Sami_GSFactor_ovine\stiffnessDa
 
 optiParam = {}
 optiParam['maxIter'] = 40 # max number of iteration in the optimisation process !!
-optiParam['tol'] = 1e-6 # tolerance on the function value
+optiParam['tol'] = 1e-3 # tolerance on the function value (RMS error)
 
 bounds = (1e-4,0.1)
 

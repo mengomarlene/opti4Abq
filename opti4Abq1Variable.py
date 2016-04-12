@@ -3,6 +3,7 @@ from opti4AbqTools import *
 verbose = False
 
 def getOptiParamScalar(modelsDir, expDir, optiParam, pBounds=None):
+    from opti4AbqResiduals import residualsScalar
     global NIter
     from scipy.optimize import minimize_scalar
     opts = {'maxiter':optiParam['maxIter'],'disp':True}
