@@ -4,7 +4,6 @@ verbose = False
 
 def getOptiParamScalar(modelsDir, expDir, optiParam, pBounds=None):
     from opti4AbqResiduals import residualsScalar
-    global NIter
     from scipy.optimize import minimize_scalar
     opts = {'maxiter':optiParam['maxIter'],'disp':True}
     import numpy as np
@@ -16,15 +15,13 @@ def getOptiParamScalar(modelsDir, expDir, optiParam, pBounds=None):
     d['funcalls']= res.nfev
     d['task']= res.message
     d['nIte']= NIter
-    print NIter
     if verbose: print res.message
     return res.x,res.fun,d
 
 def main(modelsDir, expDir, options={}, pBounds=None, scalarFunction = True):
     optiParam = {}
     optiParam['maxIter'] = 10
-    optiParam['tol'] = 1e-8
+    optiParam['tol'] = 1e-4
     optiParam.update(options)
-    if scalarFunction:
-        return getOptiParamScalar(modelsDir, expDir, optiParam, pBounds)
+    if scalarFunction: return getOptiParamScalar(modelsDir, expDir, optiParam, pBounds)
     else:raise NotImplementedError

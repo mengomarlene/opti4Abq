@@ -2,13 +2,26 @@ import os
 from opti4AbqTools import *
 
 verbose = False
-        
-def getOptiParamVectorial(p0, modelScript, expData, optiParam, pBounds=None):
+    
+def callbackF(p):
+    import counter
+    counter.NIter += 1
+    if verbose: print 'Nb Function Evaluation: %i, parameter inputs: %s\n'%(counter.NFeval,p)
+    baseName = os.path.dirname(os.path.abspath(__file__))
+    resultFolder = os.path.join(baseName,'results')
+    if not os.path.exists(resultFolder): os.makedirs(resultFolder)
+    callbackFile = os.path.join(resultFolder,'callbackValues_%i.dat'%counter.NIter)
+    with open(callbackFile, 'w') as file:
+        file.write('Iteration Nb: %i\n'%(counter.NIter))
+        file.write('Nb Function Evaluation: %i\n'%(counter.NFeval))
+        file.write('Parameters Input: %s\n'%(p))
+
+def getOptiParamVectorial(p0, modelsDir, expDir, optiParam, pBounds=None):
     from opti4AbqResiduals import residuals
     if pBounds is None:
         from scipy.optimize import leastsq
         nbParam = len(p0)
-        pLSQ,covP,info,msg,ier = leastsq(residuals, p0, args=(modelScript, expData), full_output=True, maxfev=optiParam['maxIter']*nbParam*nbParam, epsfcn=optiParam['eps'], ftol=optiParam['tol'])
+        pLSQ,covP,info,msg,ier = leastsq(residuals, p0, args=(modelsDir, expDir), full_output=True, maxfev=optiParam['maxIter']*nbParam*nbParam, epsfcn=optiParam['eps'], ftol=optiParam['tol']/100.)
         if verbose: print msg
         fVal = info['fvec']
         d = {}
@@ -25,21 +38,21 @@ def getOptiParamVectorial(p0, modelScript, expData, optiParam, pBounds=None):
         withBounds=True
         import numpy as np
         factorTol = optiParam['tol']/np.finfo(float).eps
-        pLSQ,fVal,d = fmin_l_bfgs_b(residuals, p0, args=(modelScript, expData, withBounds), approx_grad=True, bounds=pBounds, factr=factorTol, epsilon = optiParam['eps'], disp=True, maxiter=optiParam['maxIter'],callback=callbackF)
+        pLSQ,fVal,d = fmin_l_bfgs_b(residuals, p0, args=(modelsDir, expDir, withBounds), approx_grad=True, bounds=pBounds, factr=factorTol, epsilon = optiParam['eps'], disp=True, maxiter=optiParam['maxIter'],callback=callbackF)
         if verbose: print d
-    return pLSQ,fVal,d
-    
+    return pLSQ,fVal,d 
         
 def getOptiParamScalar(p0, modelsDir, expDir, optiParam, pBounds=None):
     from opti4AbqResiduals import residualsScalar
-    opts = {'maxiter':optiParam['maxIter'],'disp':True,'ftol':optiParam['tol'],'eps':optiParam['eps']}
+    opts = {'maxiter':optiParam['maxIter'],'disp':True,'ftol':optiParam['tol']/100.,'eps':optiParam['eps']}
     from scipy.optimize import minimize
     res = minimize(residualsScalar, p0, method='L-BFGS-B', args=(modelsDir, expDir), jac=False, bounds=pBounds, tol=optiParam['tol'], options = opts,callback=callbackF)
     d = {}
     d['funcalls']= res.nfev
     d['nIte'] = res.nit
-    # d['nIte']= NIter
-    #d['grad'] = res.fjac
+    # import counter
+    # d['nIte']= counter.NIter
+    # d['grad'] = res.fjac
     d['task']= res.message
     if verbose: print res.message
     return res.x,res.fun,d
@@ -47,7 +60,7 @@ def getOptiParamScalar(p0, modelsDir, expDir, optiParam, pBounds=None):
 def main(p0, expDir, modelsDir, options={}, pBounds=None, scalarFunction = True):
     optiParam = {}
     optiParam['maxIter'] = 10
-    optiParam['ftol'] = 1e-8
+    optiParam['ftol'] = 1e-4
     optiParam.update(options)
     if scalarFunction:
         return getOptiParamScalar(p0, modelsDir, expDir, optiParam, pBounds)

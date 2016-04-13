@@ -1,14 +1,16 @@
 import os
 from opti4AbqTools import *
 
-def residuals(p, modelScript, expData, withBounds=False):
-    ''' residuals(p, expData) computes the diff (in a least square sense) between experimental data and FE data (function of p)
+def residuals(p, modelsDir, expDir, withBounds=False):
+    ''' residuals(p, modelsDir, expDir, withBounds=False) computes the diff (in a least square sense) between experimental data and FE data (function of p)
         p: set of parameters to optimize
-        expData: experimental data to fit, should be a 2D array (x,y)
+        modelsDir: directory with the computational models, contains python scripts defining and running the FE model. Each script must also contain a function called postPro
+        expDir: directory with experimental data to fit, should contains ascii files whose names are the same as the FE model names
+    each ascii file contains a 2D array (the experimental equivalent of the FE output values)
     '''
     # compute FE data function of parameters only - should return a 2D array (x,y) of floats
     # ---------------
-    feData = computeFEData(p,modelScript)
+    feData,modelNames = computeFEData(p,modelsDir)
     #
     import numpy as np
     #try to get next four lines in one with zip??
@@ -21,14 +23,11 @@ def residuals(p, modelScript, expData, withBounds=False):
         lstSq+= value**2
     lstSq /= (len(feData[0])*len(feData))
     lstSq = lstSq**0.5
-    global NIter
-    NIter += 1
-    if saveIntermediateValues: 
-        saveValues(p, feData, lstSq, NIter)
-    if withBounds:
-        return lstSq
-    else:
-        return np.resize(diff,len(p))
+    import counter
+    counter.NFeval += 1
+    if saveIntermediateValues: saveValues(p, feData, lstSq, counter.NFeval)
+    if withBounds: return lstSq
+    else: return np.resize(diff,len(p))
         
         
 def residualsScalar(p, modelsDir, expDir):
@@ -51,7 +50,7 @@ def residualsScalar(p, modelsDir, expDir):
     for value in diff: lstSq+= value**2
     lstSq /= len(diff)
     lstSq = lstSq**0.5
-    global NIter
-    NIter += 1
-    if saveIntermediateValues: saveValues(p, feData, modelNames, lstSq, NIter)
+    import counter
+    counter.NFeval += 1
+    if saveIntermediateValues: saveValues(p, feData, modelNames, lstSq, counter.NFeval)
     return lstSq
