@@ -1,7 +1,7 @@
 import os
 from opti4AbqTools import *
 
-verbose = False
+verbose = True
     
 def callbackF(p):
     import counter
@@ -16,12 +16,12 @@ def callbackF(p):
         file.write('Nb Function Evaluation: %i\n'%(counter.NFeval))
         file.write('Parameters Input: %s\n'%(p))
 
-def getOptiParamVectorial(p0, modelsDir, expDir, optiParam, pBounds=None):
+def runOptiForVectFunction(p0, modelsDir, expDir, optiParam, pBounds=None):
     from opti4AbqResiduals import residuals
     if pBounds is None:
         from scipy.optimize import leastsq
         nbParam = len(p0)
-        pLSQ,covP,info,msg,ier = leastsq(residuals, p0, args=(modelsDir, expDir), full_output=True, maxfev=optiParam['maxIter']*nbParam*nbParam, epsfcn=optiParam['eps'], ftol=optiParam['tol']/100.)
+        pLSQ,covP,info,msg,ier = leastsq(residuals, p0, args=(modelsDir, expDir), Dfun = None, full_output=True, maxfev=optiParam['maxIter']*nbParam^nbParam, epsfcn=optiParam['eps'], ftol=optiParam['tol']/100.)
         if verbose: print msg
         fVal = info['fvec']
         d = {}
@@ -42,7 +42,7 @@ def getOptiParamVectorial(p0, modelsDir, expDir, optiParam, pBounds=None):
         if verbose: print d
     return pLSQ,fVal,d 
         
-def getOptiParamScalar(p0, modelsDir, expDir, optiParam, pBounds=None):
+def runOptiWithMinimize(p0, modelsDir, expDir, optiParam, pBounds=None):
     from opti4AbqResiduals import residualsScalar
     opts = {'maxiter':optiParam['maxIter'],'disp':True,'ftol':optiParam['tol']/100.,'eps':optiParam['eps']}
     from scipy.optimize import minimize
@@ -63,7 +63,7 @@ def main(p0, expDir, modelsDir, options={}, pBounds=None, scalarFunction = True)
     optiParam['ftol'] = 1e-4
     optiParam.update(options)
     if scalarFunction:
-        return getOptiParamScalar(p0, modelsDir, expDir, optiParam, pBounds)
+        return runOptiWithMinimize(p0, modelsDir, expDir, optiParam, pBounds)
     else:
-        return getOptiParamVectorial(p0, modelsDir, expDir, optiParam, pBounds)
+        return runOptiForVectFunction(p0, modelsDir, expDir, optiParam, pBounds)
 

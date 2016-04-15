@@ -1,6 +1,18 @@
 import os
 from opti4AbqTools import *
 
+def interpolateResults(data,xi):
+    import scipy.interpolate as interpolate
+    import numpy
+    f = interpolate.interp1d(data[0],data[1])
+    return numpy.array(f(xi))
+
+def RMS(Data1D):
+    RMS = 0
+    for value in Data1D: RMS+= value**2
+    RMS /= len(Data1D)
+    return RMS**0.5   
+    
 def residuals(p, modelsDir, expDir, withBounds=False):
     ''' residuals(p, modelsDir, expDir, withBounds=False) computes the diff (in a least square sense) between experimental data and FE data (function of p)
         p: set of parameters to optimize
@@ -13,21 +25,27 @@ def residuals(p, modelsDir, expDir, withBounds=False):
     feData,modelNames = computeFEData(p,modelsDir)
     #
     import numpy as np
-    #try to get next four lines in one with zip??
     diff = list()
-    for n in range(len(feData)):
-        for m in range(len(feData[n])):
-            diff.append(expData[n][m] - feData[n][m])
-    lstSq = 0
-    for value in diff:
-        lstSq+= value**2
-    lstSq /= (len(feData[0])*len(feData))
-    lstSq = lstSq**0.5
+    for data,name in zip(feData,modelNames):
+        xFE = np.array(data[0])
+        yFE = np.array(data[1])
+        #read data file
+        dataFile = os.path.join(expDir,name.split('.')[0]+'.ascii')
+        with open(dataFile, 'r') as file: expData = zip(*(map(float,line.split()) for line in file))
+        #resample experimental data to FE sampling size
+        yExp = interpolateResults(expData,xFE)
+        #record the relative difference between experimental and FE values for each data point
+        diff.append(abs(yFE[1:]-yExp[1:])/yExp[1:])
+    if not len(feData): 
+        diff = [[1],[1]]
+        print "at least one model did not complete"
+    allLstSq  = [RMS(diff1D) for diff1D in diff]#RMS error of each model
+    lstSq = RMS(allLstSq)#RMS error (RMS error of each model)
     import counter
     counter.NFeval += 1
-    if saveIntermediateValues: saveValues(p, feData, lstSq, counter.NFeval)
+    if saveIntermediateValues: saveValues(p, feData, modelNames, lstSq, counter.NFeval)
     if withBounds: return lstSq
-    else: return np.resize(diff,len(p))
+    else: return np.resize(allLstSq,len(p))
         
         
 def residualsScalar(p, modelsDir, expDir):
@@ -46,10 +64,7 @@ def residualsScalar(p, modelsDir, expDir):
         with open(dataFile, 'r') as file: expData =  float(file.readline().split()[0])
         # add difference in list
         if data[0]: diff.append((expData - data[0])/expData)
-    lstSq = 0
-    for value in diff: lstSq+= value**2
-    lstSq /= len(diff)
-    lstSq = lstSq**0.5
+    lstSq = RMS(diff)
     import counter
     counter.NFeval += 1
     if saveIntermediateValues: saveValues(p, feData, modelNames, lstSq, counter.NFeval)

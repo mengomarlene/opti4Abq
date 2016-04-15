@@ -19,7 +19,8 @@ def computeFEData(p,modelsDir):
         output = list()
         for model in modelList:
             out1job = runModel(p,model,modelsDir)
-            output.append(out1job[0])
+            if len(out1job)>1:output.append(out1job)
+            elif len(out1job)== 1:output.append(out1job[0])               
     return output,modelList
 
 def runModel(p,modelScript,modelsDir):
@@ -51,8 +52,13 @@ def runModel(p,modelScript,modelsDir):
     cmd += ' -- %s > %s 2>&1'%(paramString,'exeCalls.txt')
     if verbose: print 'cmd= ',cmd
     pCall1 = subprocess.call(cmd, shell=True)
+    with open('exeCalls.txt', 'r') as file:
+        lastLine = file.readlines()[-1]
     os.chdir(baseName)
-    
+    # if 'error' in lastLine:
+        # output = [[0,1],[0,1]]
+        # return output
+    # else:
     #3/ run abaqus postPro -- needs to be called with abaqus python as abaqus-specific modules are needed!!
     # solution: run in a new subprocess the file runPostPro.py called with the appropriate modelScript and working directory
     cmd = 'abaqus python runPostPro.py %s %s'%(filePath,workspace)
@@ -68,12 +74,12 @@ def runModel(p,modelScript,modelsDir):
 
 def writeErrorFile(workspace,modelScript,p,pCall1,pCall2='not run yet'):
     feErrorFile = os.path.join(workspace,'notRun.txt')
-    global NIter
+    import counter
     with open(feErrorFile, 'w') as file:
         file.write('running abaqus cae on %s returned %s\n'%(toolbox.getFileName(modelScript), pCall1))
         file.write('running post pro on %s returned %s\n'%(toolbox.getFileName(modelScript), pCall2))
         file.write('parameter inputs: %s\n'%(p))
-        file.write('run number: %s\n'%(NIter))
+        file.write('run number: %s\n'%(counter.NFeval))
 
 def plotValues(fittedValues, modelScript, expData):
     baseName = os.path.dirname(os.path.abspath(__file__))
@@ -108,4 +114,10 @@ def saveValues(p, feData, names, value, no='final'):
         file.write('run number (nb function evaluation): %s\n'%(no))
         file.write('parameter inputs: %s\n'%(p))
         file.write('least square error %s\n'%value)
-        file.write('\n'.join('%s: %f ' %(name,data[0]) for data,name in zip(feData,names)))
+        try:file.write('\n'.join('%s: %f ' %(name,data[0]) for data,name in zip(feData,names)))
+        except(TypeError):
+            file.write('\n'.join('%s (last FE x and y Values): %f %f' %(name,data[0][-1],data[1][-1]) for data,name in zip(feData,names)))
+            # for data,name in zip(feData,names):
+                # file.write('%s\n' %name)    
+                # file.write('\n'.join('%f ' %values for values in data[1]))
+       

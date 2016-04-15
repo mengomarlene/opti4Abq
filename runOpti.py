@@ -4,8 +4,8 @@
 import opti4AbqMultiVariables
 import os
 
-feModelDir = r"D:\myWork\FEModels\stuffIveTried\optimisation2"
-expDir = r"D:\myWork\FEModels\stuffIveTried\optimisation2"
+feModelDir = r"D:\myWork\FEModels\stuffIveTried\optimisation"
+expDir = r"D:\myWork\FEModels\stuffIveTried\optimisation"
 
 optiParam = {}
 optiParam['maxIter'] = 40 # max number of function evaluation in the optimisation process !!there is more than one evalutation per iteration as the jacobian as to be computed!!
@@ -17,4 +17,4 @@ bounds = [(1.,100.),(1.,3000.)]
 
 #perform optimisation
 
-p,fVal,info = opti4AbqMultiVariables.main(p0, feModelDir, expDir, pBounds=bounds, options=optiParam)
+p,fVal,info = opti4AbqMultiVariables.main(p0, feModelDir, expDir, pBounds=bounds, options=optiParam, scalarFunction=False)
