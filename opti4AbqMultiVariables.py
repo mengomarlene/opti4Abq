@@ -21,7 +21,7 @@ def runOptiForVectFunction(p0, modelsDir, expDir, optiParam, pBounds=None):
     if pBounds is None:
         from scipy.optimize import leastsq
         nbParam = len(p0)
-        pLSQ,covP,info,msg,ier = leastsq(residuals, p0, args=(modelsDir, expDir), Dfun = None, full_output=True, maxfev=optiParam['maxIter']*nbParam^nbParam, epsfcn=optiParam['eps'], ftol=optiParam['tol']/100.)
+        pLSQ,covP,info,msg,ier = leastsq(residuals, p0, args=(modelsDir, expDir), Dfun = None, full_output=True, maxfev=optiParam['maxIter']*nbParam^nbParam, epsfcn=optiParam['eps'], ftol=optiParam['ftol'])
         if verbose: print msg
         fVal = info['fvec']
         d = {}
@@ -37,14 +37,14 @@ def runOptiForVectFunction(p0, modelsDir, expDir, optiParam, pBounds=None):
         from scipy.optimize import fmin_l_bfgs_b
         withBounds=True
         import numpy as np
-        factorTol = optiParam['tol']/np.finfo(float).eps
+        factorTol = optiParam['ftol']/np.finfo(float).eps
         pLSQ,fVal,d = fmin_l_bfgs_b(residuals, p0, args=(modelsDir, expDir, withBounds), approx_grad=True, bounds=pBounds, factr=factorTol, epsilon = optiParam['eps'], disp=True, maxiter=optiParam['maxIter'],callback=callbackF)
         if verbose: print d
     return pLSQ,fVal,d 
         
 def runOptiWithMinimize(p0, modelsDir, expDir, optiParam, pBounds=None):
     from opti4AbqResiduals import residualsScalar
-    opts = {'maxiter':optiParam['maxIter'],'disp':True,'ftol':optiParam['tol']/100.,'eps':optiParam['eps']}
+    opts = {'maxiter':optiParam['maxIter'],'disp':True,'ftol':optiParam['ftol'],'eps':optiParam['eps']}
     from scipy.optimize import minimize
     res = minimize(residualsScalar, p0, method='L-BFGS-B', args=(modelsDir, expDir), jac=False, bounds=pBounds, tol=optiParam['tol'], options = opts,callback=callbackF)
     d = {}
@@ -60,7 +60,7 @@ def runOptiWithMinimize(p0, modelsDir, expDir, optiParam, pBounds=None):
 def main(p0, expDir, modelsDir, options={}, pBounds=None, scalarFunction = True):
     optiParam = {}
     optiParam['maxIter'] = 10
-    optiParam['ftol'] = 1e-4
+    optiParam['ftol'] = options['tol']/10000.
     optiParam.update(options)
     if scalarFunction:
         return runOptiWithMinimize(p0, modelsDir, expDir, optiParam, pBounds)

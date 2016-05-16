@@ -36,9 +36,8 @@ def residuals(p, modelsDir, expDir, withBounds=False):
         yExp = interpolateResults(expData,xFE)
         yFE = yFE[~np.isnan(yExp)]
         yExp = yExp[~np.isnan(yExp)]
-        #record the relative difference between experimental and FE values for each data point
-        diff.append(abs(yFE-yExp)/yExp)
-        #diff.append(abs(yFE[1:]-yExp[1:])/yExp[1:])
+        #record the relative difference between experimental and FE values for each data point, if non zero
+        diff.append([abs(x-y)/y for x,y in zip(yFE,yExp) if y])
     if not len(feData): 
         diff = [[1],[1]]
         print "at least one model did not complete"
