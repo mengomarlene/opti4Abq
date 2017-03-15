@@ -1,20 +1,20 @@
-# scalar example for the opti4Abq project (multivariables)
-# run as "python runScalarOpti_multiVariables"
+# example for the opti4Abq project (multivariables)
+# run as "python runOpti"
 
 import opti4AbqMultiVariables
 import os
 
-feModelDir = r"D:\myWork\FEModels\stuffIveTried\optimisation"
-expDir = r"D:\myWork\FEModels\stuffIveTried\optimisation"
+feModelDir = r"D:\myWork\Ultrapsine\materialModelCalibration\Control"
+expDir = r"D:\myWork\Ultrapsine\expFiles"
+#ultrapsine samples calibrated for k1, k2
 
 optiParam = {}
 optiParam['maxIter'] = 40 # max number of function evaluation in the optimisation process !!there is more than one evalutation per iteration as the jacobian as to be computed!!
 optiParam['eps'] = .1 # step taken to compute the jacobian by a finite difference method
-optiParam['tol'] = 1e-3 # tolerance on the function value RMS error
+optiParam['tol'] = 10. # tolerance on the function value 
 
-p0 = (10.,500.)
-bounds = [(1.,100.),(1.,3000.)]
-
+bounds = [(.1,100.),(.5,100.)]
+p0 = [0.32,3.85]
 #perform optimisation
 
-p,fVal,info = opti4AbqMultiVariables.main(p0, feModelDir, expDir, pBounds=bounds, options=optiParam, scalarFunction=False)
+p,fVal,info = opti4AbqMultiVariables.main(p0, expDir, feModelDir, pBounds=bounds, options=optiParam, scalarFunction=False)

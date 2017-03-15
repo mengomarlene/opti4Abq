@@ -26,7 +26,7 @@ def runOptiForVectFunction(p0, modelsDir, expDir, optiParam, pBounds=None):
         fVal = info['fvec']
         d = {}
         d['funcalls']=info['nfev']
-        d['nit'] = None
+        d['nit'] = counter.NIter
         d['grad'] = info['fjac']
         if ier in [1,2,3,4]:
             d['warnflag'] = 0
