@@ -1,0 +1,15 @@
+\begin{frame}[fragile]{Data Preparation}
+\begin{itemize}
+\item 1 or more FE models = 1 or more Python files defining an Abaqus job and post-processing function
+\item the corresponding experimental data = 1 or more text files containing the experimental data formatted as the post-processing of the FE models formats its output
+\end{itemize}
+
+NOTES:
+\begin{itemize}
+\item[] all Python files must be stored in 1 folder [\texttt{pyPath}]
+\item[] all experimental files must be stored in 1 folder [\texttt{expPath}]
+\item[] (can be same folder!)
+\item[]
+\item[] \texttt{pyPath} must contain an empty file called \texttt{\_\_init\_\_.py}
+\end{itemize}
+\end{frame}

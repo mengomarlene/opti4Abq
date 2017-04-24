@@ -1,0 +1,21 @@
+\begin{frame}{Optimisation methods (interfaced from \href{https://docs.scipy.org/doc/}{scipy})}
+\hfill
+
+\begin{block}{scalar data \& 1 parameter}
+\begin{tabular}{ll}
+\href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html}{Brent method} & whether  parameter bounded or not
+\end{tabular}\end{block}
+
+\begin{block}{other data \& 1 parameter}
+\begin{tabular}{ll}
+\href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html
+}{L-BFGS-B method} &bounded parameter\\[.5ex]
+\href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html}{Conjugate gradient method} &non-bounded
+\\
+\end{tabular}\end{block}
+\begin{block}{any data \& $>1$ parameters}
+\begin{tabular}{ll}
+\href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html}{TRR algorithm} &bounded parameters\\[.5ex]
+\href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.leastsq.html}{LMDIF and LMDER algorithms} (MINPACK) &non-bounded
+\end{tabular}\end{block}
+\end{frame}

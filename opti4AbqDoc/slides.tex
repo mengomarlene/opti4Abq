@@ -1,0 +1,69 @@
+\documentclass[t]{beamer}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{hyperref}
+
+\hypersetup{
+   unicode=true,
+   hidelinks
+}
+\usetheme{imbe}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT/TITLE PAGE INFO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title[opti4Abq - A tentative tutorial/documentation]{opti4Abq, a python toolbox to run abaqus in an optimisation loop}
+\subtitle{A tentative tutorial/documentation}
+\date{\today}
+\author{Marl\`ene Mengoni}
+
+\institute[IMBE]{
+	\href{mailto:m.mengoni@leeds.ac.uk}{m.mengoni@leeds.ac.uk}\\
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MAIN CONTENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\titleframe
+
+% Concept
+\section[Background]{Concept}
+\include{tex/concept/concept}
+
+\section[]{}
+\begin{frame}{opti4Abq}%table of content
+  \myToc
+\end{frame}
+% data preparation
+\section{Data Preparation}
+\include{tex/preparingData/dataOverview}
+\include{tex/preparingData/pythonFile}
+\include{tex/preparingData/datFile}
+% opti preparation and run
+\section[Optimisation process]{Optimisation preparation and run}
+\include{tex/preparingOpti/optiObject}
+\include{tex/preparingOpti/objectMethods}
+\include{tex/whatItDoes/gradientBasedOpti}
+\include{tex/preparingOpti/optiOptions}
+% what it does
+\section{What it does}
+\include{tex/whatItDoes/functionEvaluation}
+\include{tex/whatItDoes/optiMethods}
+% output
+\section{Outputs}
+\include{tex/outputAndLimitations/output}
+\include{tex/outputAndLimitations/limitations}
+% example
+\section{Example}
+\include{tex/example}
+% admin
+\section[Citation]{Requirements and Acknowledging the toolbox}
+\include{tex/concept/requirements}
+\include{tex/citation}
+
+\include{tex/acknowledgmentSlide}
+
+\end{document}

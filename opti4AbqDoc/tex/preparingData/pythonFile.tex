@@ -1,0 +1,21 @@
+\begin{frame}[fragile]{Data Preparation - python file}
+
+The file name of the python file is the model {\color{red} identifier}.
+The file must contain:
+\begin{enumerate}
+\item an abaqus job creation (function of parameters):
+\begin{verbatim}
+if __name__ == '__main__':
+    import sys
+    nbParam = 2
+    paramToOpti = list()
+    for arg in range(nbParam):
+       paramToOpti.insert(0,float(sys.argv[-1-arg]))
+    job = jobCreation(paramToOpti) 
+    job.submit()
+    job.waitForCompletion()
+\end{verbatim}
+\item A function  (called \texttt{postPro}) that reads the odb and writes a file called
+    \texttt{output.dat} with output of interest
+\end{enumerate}
+\end{frame}

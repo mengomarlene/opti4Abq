@@ -1,0 +1,58 @@
+\usepackage{color}
+\usecolortheme{imbe}% background color definition
+\addtolength{\headsep}{0.3cm}
+
+\setbeamertemplate{headline}
+{
+  \begin{beamercolorbox}{section in head/foot}
+    \vskip3pt\insertnavigation{\paperwidth}\vskip18pt
+  \end{beamercolorbox}%
+}
+
+\setbeamertemplate{footline}
+{%
+	\leavevmode%
+		\begin{beamercolorbox}[wd=.666\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+			\usebeamerfont{title in head/foot}\insertshorttitle
+		\end{beamercolorbox}%
+		%
+		\begin{beamercolorbox}[wd=.333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+			\usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}\insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+		\end{beamercolorbox}
+}
+
+\mode<beamer>{\setbeamertemplate{blocks}[rounded]}
+\defbeamertemplate{itemize item}{bullet}{\textbullet}
+\setbeamertemplate{itemize item}[bullet]
+
+\setbeamersize{text margin left = 2em}
+\setbeamersize{text margin right = 2em}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{section in toc}{\inserttocsectionnumber.~\inserttocsection}
+
+\newcommand{\myToc}{
+\vfill\hfill
+\parbox[t]{.85\textwidth}{
+  \begin{minipage}[c][0.75\textheight]{\textwidth}
+  \tableofcontents
+  \end{minipage}
+}
+}
+
+\newcommand{\titleframe}{
+{%title page - no change required
+	\setbeamertemplate{headline}{} 
+	\setbeamertemplate{footline}{} 
+    \usebackgroundtemplate{
+    \includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{figures/imbeBackgroundTitle.pdf}
+    }
+	\frame[plain,noframenumbering]{\vskip10ex\titlepage}
+}
+}
+
+% Background
+\usebackgroundtemplate{
+	\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{figures/imbeBackground.pdf}
+}
+

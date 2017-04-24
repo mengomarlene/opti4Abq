@@ -1,0 +1,17 @@
+\begin{frame}{Outputs}
+\texttt{p,fVal,info = myOptiProcess.run()}
+
+\begin{itemize}
+\item \texttt{p}: output parameters
+\item \texttt{fVal}: value of the objective function
+\item \texttt{info}: a dictionary of information:
+\begin{itemize}
+\item \texttt{info['funcalls']}: number of function evaluation that were required
+\item \texttt{info['task']}: an output message by the optimisation process
+\item \texttt{info['grad']}: the value of the jacobian
+\end{itemize}
+\item[]
+\item[+] all Abaqus files (and output of interest) of the last run (in \texttt{workspace})
+\item[+] for some of the algorithms, intermediate \texttt{p} and \texttt{fVal} values into text files (in \texttt{results}) [if \texttt{verbose==True}]
+\end{itemize}
+\end{frame}

@@ -1,0 +1,19 @@
+\begin{frame}[fragile]{opti4Abq options}
+
+\verb|myOpti.setOptions(options)|:
+\vskip20pt
+\begin{adjustwidth}{-1.5em}{-1.5em}
+\begin{tabular}{ll}
+\textbullet\ control end of process&\\
+\verb|options['maxIter']= 10|&max number of iterations\\
+\verb|options['tol']= 1e-4|&tolerance on the parameter\\
+&variation\\
+\verb|options['ftol']= options['tol']*1e-4|&tolerance on the function\\
+\verb|options['gtol']= options['tol']*1e-4|&tolerance on the gradient\\
+\\
+\textbullet\ control step to evaluate gradient&\\
+\verb|options['eps']= 1e-4|&step for the jacobian
+\end{tabular}
+\end{adjustwidth}
+
+\end{frame}

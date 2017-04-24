@@ -1,0 +1,23 @@
+\begin{frame}[fragile]{opti4Abq object}
+\begin{itemize}
+\item preparing the optimisation
+
+\verb|import opti4AbqTools.Opti4AbqClass as optiTools|
+
+\verb|myOpti = optiTools.Opti4Abq(p0, expPath, pyPath)|\\[5pt]
+
+\verb|p0| is a Python list with the initial guess of the parameter values
+
+\item Running the optimisation\\[5pt]
+
+if type of data is scalar:
+\begin{verbatim}
+       p,fVal,info = myOpti.runScalar()
+\end{verbatim}
+else:
+\begin{verbatim}
+       p,fVal,info = myOpti.run()
+\end{verbatim}
+\end{itemize}
+\end{frame}
+

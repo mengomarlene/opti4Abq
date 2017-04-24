@@ -25,7 +25,7 @@ Mengoni M. "opti4Abq v.2.0, a generic python code to run Abaqus in an optimisati
   Title  = {opti4Abq, a generic python code to run Abaqus in an optimisation loop},
   Author = {Mengoni, M.},
   Date = {2015-04-07},
-  Doi = {http://dx.doi.org/10.5281/zenodo.49565},
+  Doi = {http://dx.doi.org/10.5281/zenodo.557057},
   Version = {2.0}
 }
 ```
