@@ -1,4 +1,4 @@
-# opti4Abq 2.0
+# opti4Abq 2.0.1
 
 An optimisation method in Python 2.X that runs on a set of abaqus models to minimise the difference (in a least square sense) between the FEA output and a corresponding set of data
 
