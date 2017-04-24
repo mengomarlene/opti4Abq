@@ -7,16 +7,16 @@ class Opti4Abq:
         setVerbose(verbose=False):
         setResidualAsAbsolute(absolute)
 
-        run_scalar()#optimisation for a scalar residuals
+        runScalar()#optimisation for a scalar residuals
         run()#other optimisation
     """
     def __init__(self,initValues,data,models):
         self.p0 = initValues
-        self.dataPath = data#either a string or a set object
-        self.modelsPath = models#either a string or a set object
+        self.dataPath = data
+        self.modelsPath = models
         self.absDiff = False
         self.bounds = None
-        self.options = None
+        self.options = {}
         self.verbose = False
     #-----------------------------------------------------
     def setResidualsAsAbsolute(self,absolute=False):
@@ -35,7 +35,7 @@ class Opti4Abq:
     #-----------------------------------------------------
     def runScalar(self):
         return self.__minimize(scalarResidual = True)
-    def run(self,noLBFGS=False):
+    def run(self,noLBFGS=True):
         return self.__minimize(scalarResidual = False, noLBFGS=noLBFGS)
     #-----------------------------------------------------
     #-----------------------------------------------------
@@ -44,20 +44,21 @@ class Opti4Abq:
             return True
         else: return False
     #-----------------------------------------------------
-    def __minimize(self,scalarResidual=False, noLBFGS=False):
+    def __minimize(self,scalarResidual=False, noLBFGS=True):
         optiParam = {}
         optiParam['maxIter'] = 10
-        optiParam['ftol'] = self.options['tol']/10000.
         optiParam['tol'] = 1e-4
         optiParam['eps'] = 1e-4
+        self.options.update(optiParam)
         optiParam['gtol'] = self.options['tol']/10000.
-        optiParam.update(self.options)
+        optiParam['ftol'] = self.options['tol']/10000.
+        self.options.update(optiParam)
         if self.__isOneParam():
             return self.__runScalarOpti(scalarResidual, optiParam)
         else:
             return self.__runOpti(scalarResidual, optiParam, noLBFGS)
     #-----------------------------------------------------
-    def __runOpti(self, scalarResidual=False, optiParam={}, noLBFGS=False):
+    def __runOpti(self, scalarResidual=False, optiParam={}, noLBFGS=True):
         from runAbqTools import callbackF
         import numpy as np
         if scalarResidual:

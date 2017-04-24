@@ -25,7 +25,7 @@ fileName = sys.argv[-2]
 workspace = sys.argv[-1]
 from toolbox import fileToModule
 
-baseName = os.path.dirname(os.path.abspath(__file__))
+baseName = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if not os.path.isdir(workspace):
     raise Exception("cannot run postPro on empty workspace!")
 else :

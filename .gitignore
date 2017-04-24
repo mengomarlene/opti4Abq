@@ -1,7 +1,5 @@
 workspace/
-*.pyc
-*.wmv
-*.py.bak
-*.ascii
-*.dat
-opti4AbqDoc/verbose.PNG
+*/*.pyc
+*/*.wmv
+*/*.py.bak
+*/*.ascii
