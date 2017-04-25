@@ -7,7 +7,7 @@ thisDir = os.getcwd()
 feModelDir = os.path.join(thisDir,r"opti4AbqExamples\1D2Param")
 expDir = os.path.join(thisDir,r"opti4AbqExamples\1D2Param")
 
-p0 = [0.1,0.1]
+p0 = [0.1,0.5]
 bounds = [(.01,.01),(10.,10.)]
 
 #perform optimisation

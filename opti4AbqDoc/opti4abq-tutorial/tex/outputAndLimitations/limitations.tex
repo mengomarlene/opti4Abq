@@ -2,11 +2,12 @@
 
 \begin{itemize}
 \item all parameters need to have values of the same order
-\item all python files need to be stored in same folder (hence need second copy in other directory if running on subset of models)
+\item all python files need to be stored in same folder (hence need second copy in other directory if running on subset of models) and only python files that are models can be in that folder (in particular no tools module)
 \item all python files defining abaqus jobs need to be launchable with
   \texttt{abaqus cae nogui=myPythonFile.py}
   
   ? may be an issue with user subroutines
+\item all models need to have the same type of data
 \item not easily portable on HPC environments with SGE queues!
 \item currently only limited gradient-based opti algorithms interfaced
 \item \dots [probably plenty of others!]

@@ -13,7 +13,7 @@ optiParam['eps'] = .01 # step taken to compute the jacobian by a finite differen
 optiParam['ftol'] = .1 # tolerance on the function value 
 optiParam['tol'] = 1e-5 # tolerance on the parameter value 
 
-p0 = [0.32]
+p0 = [0.01]
 bounds = [[.0001],[.1]]
 
 #perform optimisation
