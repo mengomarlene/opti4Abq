@@ -1,4 +1,5 @@
 workspace/
+figsToIgnore/
 */*.pyc
 */*.wmv
 */*.py.bak

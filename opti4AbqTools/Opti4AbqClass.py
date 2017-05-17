@@ -49,7 +49,7 @@ class Opti4Abq:
         optiParam['maxIter'] = 10
         optiParam['tol'] = 1e-4
         optiParam['eps'] = 1e-4
-        self.options.update(optiParam)
+        optiParam.update(self.options)
         optiParam['gtol'] = self.options['tol']/10000.
         optiParam['ftol'] = self.options['tol']/10000.
         self.options.update(optiParam)
