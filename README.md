@@ -5,3 +5,4 @@ An optimisation method in Python 2.X that runs on a set of abaqus models to mini
 The following Python modules are used: scipy.optimize, subprocess, numpy, and importlib if run with Python 2.7
 
 Documentation available in ./opti4AbqDoc can also be found at https://www.overleaf.com/read/wmdrgnxkpghd
+You can also find a videocast of me talking through this tutorial at goo.gl/Nc2ecH
