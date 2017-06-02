@@ -50,8 +50,11 @@ class Opti4Abq:
         optiParam['tol'] = 1e-4
         optiParam['eps'] = 1e-4
         optiParam.update(self.options)
-        optiParam['gtol'] = self.options['tol']/10000.
-        optiParam['ftol'] = self.options['tol']/10000.
+        try:
+            tol = self.options['tol']
+        except: tol = optiParam['tol']
+        optiParam['gtol'] = tol/10000.
+        optiParam['ftol'] = tol/10000.
         self.options.update(optiParam)
         if self.__isOneParam():
             return self.__runScalarOpti(scalarResidual, optiParam)
