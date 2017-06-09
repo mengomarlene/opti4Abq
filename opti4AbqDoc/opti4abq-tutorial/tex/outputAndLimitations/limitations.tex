@@ -1,5 +1,15 @@
+\begin{frame}{Dealing with abnormal termination of FE models}
+\begin{block}{There is not check for normal termination of the abaqus job.}
+This needs to be dealt with by the user's postpro function:
+\begin{itemize}
+\item If a postPro function returns a NaN value then that specific model is ignored from the analysis.
+\item If all models are ignored from the analysis then the optimisation runs into an Exception and stops!
+\end{itemize}
+\end{block}
+\end{frame}
+
 \begin{frame}{Limitations - 1}
-On the type of models
+\begin{block}{On the type of models}
 \begin{itemize}
 \item all parameters need to have values of the same order
 \item all models need to have the same type of data
@@ -8,26 +18,22 @@ On the type of models
   
   ? may be an issue with user subroutines
 \end{itemize}
-\begin{block}{warning}
-THERE IS NOT CHECK FOR NORMAL TERMINATION OF THE ABAQUS JOB
-
-THIS NEEDS TO BE DEALT WITH BY THE USER'S POSTPRO FUNCTION
 \end{block}
-
 \end{frame}
 
-
 \begin{frame}{Limitations - 2}
-On the workflow
+\begin{block}{On the workflow}
 \begin{itemize}
 \item all python files need to be stored in same folder (hence need second copy in other directory if running on subset of models)
 \item only python files that are models can be in that folder (in particular no tools module) \item all python files need to be in same drive as toolbox
 \end{itemize}
-Others
+\end{block}
+\begin{block}{Others}
 \begin{itemize}
 \item tested only on windows OS
 \item not easily portable on HPC environments with SGE queues!
 \item currently only limited gradient-based opti algorithms interfaced
 \item \dots [probably plenty of others!]
 \end{itemize}
+\end{block}
 \end{frame}
