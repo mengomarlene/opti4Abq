@@ -21,6 +21,7 @@ if __name__ == '__main__':
         paramToOpti.insert(0,float(sys.argv[-1-arg]))
     p = {}
     p['cohesivePenalties'] = (paramToOpti[0],paramToOpti[1],1.)
+    p['modelName'] = 'test1D'
     job,mdb = tools.createAnalysis(tools.getParameters(p))
     job.submit()
     job.waitForCompletion()

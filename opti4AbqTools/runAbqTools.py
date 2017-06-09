@@ -115,8 +115,7 @@ def plotIntermediateValues(feData, expData, no='final'):
     plt.savefig('fit_%i.pdf'%no, bbox_inches='tight')
 #-----------------------------------------------------
 def saveValues(p, feData, names, value, no='final'):
-    baseName = os.path.dirname(os.path.abspath(__file__))
-    resultFolder = os.path.join(baseName,'results')
+    resultFolder = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'results')
     if not os.path.exists(resultFolder): os.makedirs(resultFolder)
     feDataFile = os.path.join(resultFolder,'intermediateValues_%i.dat'%no)
     with open(feDataFile, 'w') as file:

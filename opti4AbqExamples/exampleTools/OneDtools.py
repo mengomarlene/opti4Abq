@@ -23,6 +23,7 @@ def postPro(odbName):
     import postProTools.odbTools as odbTools
     import postProTools.extractors as ext
     import math
+
     myOdb = odbTools.openOdb(odbName)
     myAssembly = myOdb.rootAssembly
     # PRODUCE NODE SET ON THE NODES I EXTRACT COORDINATES FROM.
@@ -49,7 +50,6 @@ def postPro(odbName):
         myNodes = tuple(nodeList)
         myAssembly.NodeSetFromNodeLabels(name = newSet, nodeLabels = myNodes)
     displ = ext.getFinalU_1(myOdb,newSet)
-    
     odbTools.writeValuesOpti(displ)
     myOdb.close()
 #-----------------------------------------------------
