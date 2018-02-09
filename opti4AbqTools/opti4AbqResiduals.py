@@ -64,7 +64,6 @@ def residuals(p, modelsDir, expDir, withBounds=False, absDiff=False, verbose=Fal
                 yFE = list(data)
                 dataFile = os.path.join(expDir,name.split('.')[0]+'.dat')
                 with open(dataFile, 'r') as file: yExp = zip(*(map(float,line.split()) for line in file))[0]
-
             if any(np.isnan(yFE)):
                 print "FE model (model name: %s) returned at least 1 NaN value - skipping it"%(name)
                 continue# gets to the next feModel in the loop without recording data for this model
@@ -107,6 +106,9 @@ def residualsScalar(p, modelsDir, expDir, absDiff=False, verbose=False):
         #read data file
         dataFile = os.path.join(expDir,name.split('.')[0]+'.dat')
         with open(dataFile, 'r') as file: expData =  float(file.readline().split()[0])
+        if np.isnan(data[0]):
+            print "FE model (model name: %s) returned at least 1 NaN value - skipping it"%(name)
+            continue# gets to the next feModel in the loop without recording data for this model
         # add difference in list
         if absDiff or not expData:
             diff.append(expData - data[0])
